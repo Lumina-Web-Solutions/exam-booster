@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Special Delivery 📦</title>
+    <style>
+        /* CSS: The Styling */
+        body {
+            background-color: #0f0f0f; /* Dark Mode */
+            color: #ffffff;
+            font-family: 'Courier New', Courier, monospace; /* Tech Vibe */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+            text-align: center;
+        }
+
+        .container {
+            padding: 20px;
+            max-width: 400px;
+            z-index: 10;
+        }
+
+        h1 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            color: #e0e0e0;
+        }
+
+        p {
+            color: #888;
+            font-size: 0.9rem;
+            margin-bottom: 30px;
+        }
+
+        /* The Wrapper Button */
+        .wrapper-btn {
+            background: linear-gradient(135deg, #6a1b9a, #4a148c); /* Purple Cadbury Vibe */
+            border: 2px solid #ab47bc;
+            color: white;
+            padding: 15px 30px;
+            font-size: 1.2rem;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 0 15px rgba(171, 71, 188, 0.5);
+            transition: transform 0.2s, box-shadow 0.2s;
+            animation: pulse 2s infinite;
+        }
+
+        .wrapper-btn:active {
+            transform: scale(0.95);
+        }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(171, 71, 188, 0.4); }
+            70% { box-shadow: 0 0 0 15px rgba(171, 71, 188, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(171, 71, 188, 0); }
+        }
+
+        /* The Hidden Content */
+        .hidden-content {
+            display: none;
+            animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .chocolate {
+            font-size: 80px;
+            margin: 20px 0;
+            display: block;
+            filter: drop-shadow(0 0 20px rgba(255, 215, 0, 0.3));
+        }
+
+        .message-card {
+            background: #1a1a1a;
+            border: 1px solid #333;
+            padding: 20px;
+            border-radius: 15px;
+            margin-top: 10px;
+        }
+
+        .highlight {
+            color: #ffca28; /* Gold Color */
+            font-weight: bold;
+        }
+
+        .footer {
+            position: absolute;
+            bottom: 20px;
+            font-size: 0.7rem;
+            color: #444;
+            letter-spacing: 1px;
+        }
+
+        /* Animations */
+        @keyframes popIn {
+            0% { opacity: 0; transform: scale(0.5); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+    </style>
+</head>
+<body>
+
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+    <div class="container">
+        <div id="screen1">
+            <h1>Hey Topper! 🎓</h1>
+            <p>You have 1 pending delivery.</p>
+            <button class="wrapper-btn" onclick="unwrap()">👇 TAP TO UNWRAP</button>
+        </div>
+
+        <div id="screen2" class="hidden-content">
+            <h1>Happy Valentine's!</h1>
+            <span class="chocolate">🍫</span>
+            
+            <div class="message-card">
+                <p style="color: #ccc; font-size: 1rem;">
+                    Here is your Virtual Chocolate.<br>
+                    <span class="highlight">0% Calories. 100% Luck.</span>
+                </p>
+                <p style="margin-top: 15px; font-size: 0.9rem;">
+                    All the best for <b>Model Exams!</b><br>
+                    Don't stress, just do your best. ✨
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">POWERED BY LUMINA</div>
+
+    <script>
+        function unwrap() {
+            // 1. Hide the wrapper
+            document.getElementById('screen1').style.display = 'none';
+            
+            // 2. Show the chocolate
+            document.getElementById('screen2').style.display = 'block';
+
+            // 3. Fire Confetti (The "Cool" Part)
+            var duration = 3 * 1000;
+            var animationEnd = Date.now() + duration;
+            var defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 0 };
+
+            function randomInRange(min, max) {
+              return Math.random() * (max - min) + min;
+            }
+
+            var interval = setInterval(function() {
+              var timeLeft = animationEnd - Date.now();
+
+              if (timeLeft <= 0) {
+                return clearInterval(interval);
+              }
+
+              var particleCount = 50 * (timeLeft / duration);
+              // since particles fall down, start a bit higher than random
+              confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 } }));
+              confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 } }));
+            }, 250);
+        }
+    </script>
+</body>
+</html>
