@@ -3,165 +3,143 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lumina Stress Buster</title>
+    <title>Lumina Secure Transmission</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap');
 
         body {
-            background-color: #1a1a2e;
-            color: #fff;
-            font-family: 'Poppins', sans-serif;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            min-height: 100vh;
+            background-color: #050505;
+            color: #00f3ff; /* Cyan Neon */
+            font-family: 'JetBrains Mono', monospace;
+            height: 100vh;
             margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
             overflow: hidden;
-            touch-action: manipulation; /* Improves tapping on mobile */
-        }
-
-        h1 {
-            font-size: 1.2rem;
-            margin-bottom: 5px;
-            color: #e94560;
-        }
-
-        p {
-            font-size: 0.8rem;
-            color: #a0a0a0;
-            margin-bottom: 20px;
-        }
-
-        .bubble-container {
-            display: grid;
-            grid-template-columns: repeat(5, 1fr);
-            gap: 15px;
             padding: 20px;
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
         }
 
-        .bubble {
-            width: 50px;
-            height: 50px;
-            background: radial-gradient(circle at 30% 30%, #4ecca3, #2c7a60);
-            border-radius: 50%;
-            box-shadow: inset -3px -3px 10px rgba(0,0,0,0.3), 0 5px 15px rgba(78, 204, 163, 0.4);
-            cursor: pointer;
-            transition: transform 0.1s;
+        .terminal {
+            width: 100%;
+            max-width: 600px;
+            background: rgba(0, 20, 20, 0.3);
+            border: 1px solid #333;
+            border-radius: 8px;
+            padding: 25px;
+            box-shadow: 0 0 20px rgba(0, 243, 255, 0.1);
             position: relative;
         }
 
-        .bubble:active {
-            transform: scale(0.9);
+        .header {
+            display: flex;
+            justify-content: space-between;
+            border-bottom: 1px solid #333;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+            font-size: 0.8rem;
+            color: #555;
+            text-transform: uppercase;
         }
 
-        .bubble.popped {
-            background: #16213e;
-            box-shadow: inset 2px 2px 5px rgba(0,0,0,0.5);
-            animation: popAnim 0.3s ease-out;
+        .content {
+            font-size: 1rem;
+            line-height: 1.6;
+            min-height: 150px;
         }
 
-        @keyframes popAnim {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.2); }
-            100% { transform: scale(1); }
+        .cursor {
+            display: inline-block;
+            width: 8px;
+            height: 18px;
+            background-color: #00f3ff;
+            animation: blink 1s infinite;
+            vertical-align: middle;
         }
 
-        .status-bar {
-            margin-top: 20px;
-            width: 80%;
-            height: 10px;
-            background: #333;
-            border-radius: 5px;
-            overflow: hidden;
+        .signature {
+            margin-top: 30px;
+            text-align: right;
+            font-size: 0.8rem;
+            color: #444;
+            opacity: 0;
+            animation: fadeIn 2s ease-in forwards;
+            animation-delay: 5s; /* Waits for typing to finish */
         }
 
-        .stress-level {
-            height: 100%;
-            width: 100%;
-            background: linear-gradient(90deg, #e94560, #ff9a3c);
-            transition: width 0.3s ease;
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
         }
 
-        .message {
-            margin-top: 15px;
-            font-size: 0.9rem;
-            min-height: 20px;
-            color: #4ecca3;
+        @keyframes fadeIn {
+            to { opacity: 1; }
         }
 
-        .footer {
+        /* Scanline effect for retro vibe */
+        body::before {
+            content: "";
             position: absolute;
-            bottom: 20px;
-            font-size: 0.7rem;
-            opacity: 0.5;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(to bottom, rgba(255,255,255,0), rgba(255,255,255,0) 50%, rgba(0,0,0,0.1) 50%, rgba(0,0,0,0.1));
+            background-size: 100% 4px;
+            pointer-events: none;
+            z-index: 10;
         }
     </style>
 </head>
 <body>
 
-    <h1>Exam Stress Buster 💊</h1>
-    <p>Tap the bubbles to release stress.</p>
-
-    <div class="bubble-container" id="grid">
+    <div class="terminal">
+        <div class="header">
+            <span>Server: LUMINA-CORE</span>
+            <span>Target: EVANA_110</span>
         </div>
+        
+        <div class="content" id="typewriter"></div>
+        <span class="cursor"></span>
 
-    <div class="status-bar">
-        <div class="stress-level" id="stressMeter"></div>
+        <div class="signature">
+            > Transmission End.<br>
+            - Senior.
+        </div>
     </div>
-    
-    <div class="message" id="msg">Current Stress: 100%</div>
-
-    <div class="footer">Made with ❤️ by Senior (Lumina)</div>
 
     <script>
-        const grid = document.getElementById('grid');
-        const stressMeter = document.getElementById('stressMeter');
-        const msg = document.getElementById('msg');
-        let stress = 100;
-        const totalBubbles = 20;
+        const text = [
+            "Initializing connection...",
+            "Analyzing Physics workload... [High]",
+            "Calculating success probability... 99.9%",
+            "...",
+            "Hey.",
+            "I know it's stressful right now.",
+            "But you are sharper than you think.",
+            "Finish the fight. Sleep well.",
+            "We are all rooting for you."
+        ];
 
-        // Generate Bubbles
-        for (let i = 0; i < totalBubbles; i++) {
-            const bubble = document.createElement('div');
-            bubble.classList.add('bubble');
-            bubble.addEventListener('click', () => popBubble(bubble));
-            grid.appendChild(bubble);
-        }
+        let lineIndex = 0;
+        let charIndex = 0;
+        const speed = 40; // Typing speed
+        const element = document.getElementById("typewriter");
 
-        function popBubble(element) {
-            if (element.classList.contains('popped')) return;
-
-            // Visual Pop
-            element.classList.add('popped');
-            
-            // Haptic Feedback (Vibration on mobile)
-            if (navigator.vibrate) {
-                navigator.vibrate(50);
-            }
-
-            // Reduce Stress Logic
-            stress -= (100 / totalBubbles);
-            if (stress < 0) stress = 0;
-            
-            stressMeter.style.width = stress + "%";
-            
-            if (stress > 0) {
-                msg.innerText = `Releasing Stress... ${Math.round(stress)}% left`;
-            } else {
-                msg.innerText = "✨ All Clean! Go crush that Exam now! ✨";
-                msg.style.color = "#fff";
-                confettiEffect();
+        function typeWriter() {
+            if (lineIndex < text.length) {
+                if (charIndex < text[lineIndex].length) {
+                    element.innerHTML += text[lineIndex].charAt(charIndex);
+                    charIndex++;
+                    setTimeout(typeWriter, speed);
+                } else {
+                    element.innerHTML += "<br>";
+                    charIndex = 0;
+                    lineIndex++;
+                    setTimeout(typeWriter, 400); // Pause between lines
+                }
             }
         }
 
-        function confettiEffect() {
-            document.body.style.backgroundColor = "#233e8b";
-            // Simple visual change to celebrate completion
-        }
+        // Start typing after 1 second
+        setTimeout(typeWriter, 1000);
     </script>
 
 </body>
