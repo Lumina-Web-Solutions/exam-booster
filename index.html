@@ -3,202 +3,101 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lumina Invoice #001</title>
+    <title>For Eva</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Courier+Prime:wght@400;700&family=Inter:wght@400;600&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Montserrat:wght@300;400&display=swap');
 
         body {
-            background-color: #f4f4f4;
+            background-color: #fdfbf7; /* Warm paper color */
+            color: #2c2c2c;
+            font-family: 'Montserrat', sans-serif;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
             margin: 0;
-            font-family: 'Inter', sans-serif;
             padding: 20px;
         }
 
-        .invoice-card {
+        .card {
             background: white;
-            width: 100%;
-            max-width: 350px;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            padding: 40px;
+            max-width: 320px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.05);
+            border-radius: 2px; /* Sharp edges like a letter */
+            text-align: center;
             position: relative;
-            background-image: radial-gradient(#e5e5e5 1px, transparent 1px);
-            background-size: 20px 20px;
+            border: 1px solid #eaeaea;
         }
 
-        .header {
-            text-align: center;
-            border-bottom: 2px dashed #ccc;
-            padding-bottom: 20px;
+        /* A small elegant line at the top */
+        .card::before {
+            content: "";
+            display: block;
+            width: 40px;
+            height: 2px;
+            background-color: #d4a373; /* Gold/Tan */
+            margin: 0 auto 30px auto;
+        }
+
+        h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            font-weight: 400;
             margin-bottom: 20px;
+            font-style: italic;
+            color: #111;
         }
 
-        .logo {
-            font-family: 'Courier Prime', monospace;
-            font-weight: 700;
-            font-size: 1.5rem;
-            color: #333;
-            letter-spacing: -1px;
+        p {
+            font-size: 0.95rem;
+            line-height: 1.8;
+            color: #555;
+            margin-bottom: 30px;
         }
 
-        .badge {
-            background: #ff4757;
-            color: white;
-            padding: 4px 8px;
-            border-radius: 4px;
+        .date {
             font-size: 0.7rem;
-            text-transform: uppercase;
-            font-weight: bold;
-            margin-top: 5px;
-            display: inline-block;
-        }
-
-        .details {
-            font-size: 0.85rem;
-            color: #666;
-            margin-bottom: 20px;
-        }
-
-        .details strong {
-            color: #333;
-        }
-
-        .table {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 0.9rem;
-            margin-bottom: 20px;
-        }
-
-        .table th {
-            text-align: left;
-            color: #888;
-            font-weight: normal;
-            font-size: 0.8rem;
-            padding-bottom: 10px;
-        }
-
-        .table td {
-            padding: 8px 0;
-            border-bottom: 1px solid #eee;
-        }
-
-        .item-name {
-            font-weight: 600;
-            color: #2d3436;
-        }
-
-        .item-desc {
-            font-size: 0.75rem;
             color: #999;
-        }
-
-        .total-section {
-            text-align: right;
-            margin-top: 20px;
-        }
-
-        .total-label {
-            font-size: 0.9rem;
-            color: #666;
-        }
-
-        .total-amount {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: #2d3436;
-        }
-
-        .footer {
-            margin-top: 30px;
-            text-align: center;
-            font-size: 0.8rem;
-            color: #aaa;
-            font-family: 'Courier Prime', monospace;
-        }
-
-        .stamp {
-            position: absolute;
-            bottom: 80px;
-            right: 20px;
-            border: 3px solid #ff4757;
-            color: #ff4757;
-            padding: 10px;
-            font-weight: bold;
             text-transform: uppercase;
-            font-family: 'Courier Prime', monospace;
-            transform: rotate(-15deg);
-            opacity: 0.8;
-            font-size: 1.2rem;
-            animation: stampAnim 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+            letter-spacing: 2px;
+            margin-top: 40px;
         }
 
-        @keyframes stampAnim {
-            0% { transform: scale(3) rotate(-15deg); opacity: 0; }
-            100% { transform: scale(1) rotate(-15deg); opacity: 0.8; }
+        .heart {
+            color: #bf4040; /* Muted Red */
+            font-size: 1.2rem;
+            animation: beat 2s infinite ease-in-out;
+        }
+
+        @keyframes beat {
+            0%, 100% { transform: scale(1); opacity: 0.8; }
+            50% { transform: scale(1.1); opacity: 1; }
         }
     </style>
 </head>
 <body>
 
-    <div class="invoice-card">
-        <div class="header">
-            <div class="logo">LUMINA SOLUTIONS</div>
-            <div class="badge">Official Receipt</div>
-        </div>
+    <div class="card">
+        <h1>Today.</h1>
+        
+        <p>
+            I thought I knew you.<br>
+            But then I saw you smile today.
+        </p>
 
-        <div class="details">
-            <p><strong>Billed To:</strong> Topper (Evana)</p>
-            <p><strong>Date:</strong> Today</p>
-            <p><strong>Invoice ID:</strong> #SMILE-001</p>
-        </div>
+        <p>
+            Not the polite smile.<br>
+            The real one.
+        </p>
 
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>ITEM</th>
-                    <th style="text-align: right;">COST</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>
-                        <div class="item-name">The Special Smile</div>
-                        <div class="item-desc">High voltage impact on Senior</div>
-                    </td>
-                    <td style="text-align: right;">1 Heartbeat</td>
-                </tr>
-                <tr>
-                    <td>
-                        <div class="item-name">Eye Contact</div>
-                        <div class="item-desc">Direct look duration: 3 sec</div>
-                    </td>
-                    <td style="text-align: right;">My Focus</td>
-                </tr>
-                <tr>
-                    <td>
-                        <div class="item-name">Cuteness Tax</div>
-                        <div class="item-desc">Standard Lumina Tax (18%)</div>
-                    </td>
-                    <td style="text-align: right;">High</td>
-                </tr>
-            </tbody>
-        </table>
+        <p>
+            You have no idea how beautiful you looked in that moment.
+        </p>
+        
+        <div class="heart">❤</div>
 
-        <div class="total-section">
-            <div class="total-label">TOTAL DAMAGE</div>
-            <div class="total-amount">MY HEART</div>
-        </div>
-
-        <div class="stamp">PAID IN FULL</div>
-
-        <div class="footer">
-            *No Refunds. You have to keep smiling like that every day.*
-        </div>
+        <div class="date">February 17, 2026</div>
     </div>
 
 </body>
