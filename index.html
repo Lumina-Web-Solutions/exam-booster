@@ -3,158 +3,203 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>For Evana</title>
+    <title>Lumina Invoice #001</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&family=Montserrat:wght@300;500&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Courier+Prime:wght@400;700&family=Inter:wght@400;600&display=swap');
 
         body {
-            background: linear-gradient(to bottom, #0f2027, #203a43, #2c5364);
-            color: #fff;
-            font-family: 'Montserrat', sans-serif;
-            height: 100vh;
-            margin: 0;
-            overflow: hidden;
+            background-color: #f4f4f4;
             display: flex;
             justify-content: center;
             align-items: center;
-            text-align: center;
+            height: 100vh;
+            margin: 0;
+            font-family: 'Inter', sans-serif;
             padding: 20px;
         }
 
-        /* Starry Background */
-        .stars {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: -1;
-        }
-
-        .star {
-            position: absolute;
+        .invoice-card {
             background: white;
-            border-radius: 50%;
-            opacity: 0.8;
-            animation: twinkle 2s infinite ease-in-out;
+            width: 100%;
+            max-width: 350px;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            position: relative;
+            background-image: radial-gradient(#e5e5e5 1px, transparent 1px);
+            background-size: 20px 20px;
         }
 
-        @keyframes twinkle {
-            0%, 100% { opacity: 0.3; transform: scale(0.8); }
-            50% { opacity: 1; transform: scale(1.2); }
-        }
-
-        /* Glass Card */
-        .card {
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(10px);
-            padding: 40px 30px;
-            border-radius: 20px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            max-width: 400px;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.5);
-            animation: float 6s ease-in-out infinite;
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
-        }
-
-        h1 {
-            font-family: 'Dancing Script', cursive;
-            font-size: 2.5rem;
+        .header {
+            text-align: center;
+            border-bottom: 2px dashed #ccc;
+            padding-bottom: 20px;
             margin-bottom: 20px;
-            color: #ffd700; /* Gold */
-            text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
         }
 
-        p {
-            font-size: 1rem;
-            line-height: 1.6;
-            margin-bottom: 20px;
-            color: #e0e0e0;
+        .logo {
+            font-family: 'Courier Prime', monospace;
+            font-weight: 700;
+            font-size: 1.5rem;
+            color: #333;
+            letter-spacing: -1px;
         }
 
-        .highlight {
-            color: #fff;
-            font-weight: 500;
-            border-bottom: 1px dashed rgba(255,255,255,0.5);
-        }
-
-        .btn {
-            display: inline-block;
-            margin-top: 20px;
-            padding: 12px 30px;
-            background: #fff;
-            color: #2c5364;
-            text-decoration: none;
+        .badge {
+            background: #ff4757;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            text-transform: uppercase;
             font-weight: bold;
-            border-radius: 30px;
-            transition: 0.3s;
-            box-shadow: 0 5px 15px rgba(255,255,255,0.3);
+            margin-top: 5px;
+            display: inline-block;
         }
 
-        .btn:hover {
-            transform: scale(1.05);
-            box-shadow: 0 8px 25px rgba(255,255,255,0.5);
+        .details {
+            font-size: 0.85rem;
+            color: #666;
+            margin-bottom: 20px;
+        }
+
+        .details strong {
+            color: #333;
+        }
+
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.9rem;
+            margin-bottom: 20px;
+        }
+
+        .table th {
+            text-align: left;
+            color: #888;
+            font-weight: normal;
+            font-size: 0.8rem;
+            padding-bottom: 10px;
+        }
+
+        .table td {
+            padding: 8px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .item-name {
+            font-weight: 600;
+            color: #2d3436;
+        }
+
+        .item-desc {
+            font-size: 0.75rem;
+            color: #999;
+        }
+
+        .total-section {
+            text-align: right;
+            margin-top: 20px;
+        }
+
+        .total-label {
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .total-amount {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #2d3436;
         }
 
         .footer {
             margin-top: 30px;
-            font-size: 0.7rem;
-            opacity: 0.6;
+            text-align: center;
+            font-size: 0.8rem;
+            color: #aaa;
+            font-family: 'Courier Prime', monospace;
         }
 
+        .stamp {
+            position: absolute;
+            bottom: 80px;
+            right: 20px;
+            border: 3px solid #ff4757;
+            color: #ff4757;
+            padding: 10px;
+            font-weight: bold;
+            text-transform: uppercase;
+            font-family: 'Courier Prime', monospace;
+            transform: rotate(-15deg);
+            opacity: 0.8;
+            font-size: 1.2rem;
+            animation: stampAnim 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+        }
+
+        @keyframes stampAnim {
+            0% { transform: scale(3) rotate(-15deg); opacity: 0; }
+            100% { transform: scale(1) rotate(-15deg); opacity: 0.8; }
+        }
     </style>
 </head>
 <body>
 
-    <div class="stars" id="star-container"></div>
+    <div class="invoice-card">
+        <div class="header">
+            <div class="logo">LUMINA SOLUTIONS</div>
+            <div class="badge">Official Receipt</div>
+        </div>
 
-    <div class="card">
-        <h1>Hey Topper...</h1>
-        
-        <p>I know, I know. You said you are <span class="highlight">"Average"</span>.</p>
-        
-        <p>But that's exactly why I'm writing this. 
-        Top ranks are just numbers. But people like us? 
-        The "Average" ones? We are the ones who build the coolest things. 
-        We are the ones who surprise the world.</p>
+        <div class="details">
+            <p><strong>Billed To:</strong> Topper (Evana)</p>
+            <p><strong>Date:</strong> Today</p>
+            <p><strong>Invoice ID:</strong> #SMILE-001</p>
+        </div>
 
-        <p>The house might be noisy, and Physics might be annoying, 
-        but right now, in this little space, it's just you and your potential.</p>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>ITEM</th>
+                    <th style="text-align: right;">COST</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        <div class="item-name">The Special Smile</div>
+                        <div class="item-desc">High voltage impact on Senior</div>
+                    </td>
+                    <td style="text-align: right;">1 Heartbeat</td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="item-name">Eye Contact</div>
+                        <div class="item-desc">Direct look duration: 3 sec</div>
+                    </td>
+                    <td style="text-align: right;">My Focus</td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="item-name">Cuteness Tax</div>
+                        <div class="item-desc">Standard Lumina Tax (18%)</div>
+                    </td>
+                    <td style="text-align: right;">High</td>
+                </tr>
+            </tbody>
+        </table>
 
-        <p>Take a deep breath. You got this.</p>
-        
+        <div class="total-section">
+            <div class="total-label">TOTAL DAMAGE</div>
+            <div class="total-amount">MY HEART</div>
+        </div>
+
+        <div class="stamp">PAID IN FULL</div>
+
         <div class="footer">
-            - Your Senior (Alfin)
+            *No Refunds. You have to keep smiling like that every day.*
         </div>
     </div>
-
-    <script>
-        // Generate Stars
-        const starContainer = document.getElementById('star-container');
-        const starCount = 100;
-
-        for (let i = 0; i < starCount; i++) {
-            const star = document.createElement('div');
-            star.classList.add('star');
-            
-            const xy = Math.random() * 100;
-            const duration = Math.random() * (3 - 1) + 1;
-            const size = Math.random() * (3 - 1) + 1;
-
-            star.style.left = Math.random() * 100 + '%';
-            star.style.top = Math.random() * 100 + '%';
-            star.style.width = size + 'px';
-            star.style.height = size + 'px';
-            star.style.animationDuration = duration + 's';
-
-            starContainer.appendChild(star);
-        }
-    </script>
 
 </body>
 </html>
