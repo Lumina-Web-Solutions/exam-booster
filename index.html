@@ -3,102 +3,190 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>For Eva</title>
+    <title>Govt Poly Pala | S4 EEE Attendance</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Montserrat:wght@300;400&display=swap');
-
-        body {
-            background-color: #fdfbf7; /* Warm paper color */
-            color: #2c2c2c;
-            font-family: 'Montserrat', sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-            padding: 20px;
-        }
-
-        .card {
-            background: white;
-            padding: 40px;
-            max-width: 320px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.05);
-            border-radius: 2px; /* Sharp edges like a letter */
-            text-align: center;
-            position: relative;
-            border: 1px solid #eaeaea;
-        }
-
-        /* A small elegant line at the top */
-        .card::before {
-            content: "";
-            display: block;
-            width: 40px;
-            height: 2px;
-            background-color: #d4a373; /* Gold/Tan */
-            margin: 0 auto 30px auto;
-        }
-
-        h1 {
-            font-family: 'Playfair Display', serif;
-            font-size: 1.8rem;
-            font-weight: 400;
-            margin-bottom: 20px;
-            font-style: italic;
-            color: #111;
-        }
-
-        p {
-            font-size: 0.95rem;
-            line-height: 1.8;
-            color: #555;
-            margin-bottom: 30px;
-        }
-
-        .date {
-            font-size: 0.7rem;
-            color: #999;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            margin-top: 40px;
-        }
-
-        .heart {
-            color: #bf4040; /* Muted Red */
-            font-size: 1.2rem;
-            animation: beat 2s infinite ease-in-out;
-        }
-
-        @keyframes beat {
-            0%, 100% { transform: scale(1); opacity: 0.8; }
-            50% { transform: scale(1.1); opacity: 1; }
-        }
+        * { box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; padding: 0; }
+        body { background-color: #f0f2f5; color: #333; }
+        .sidebar { width: 250px; background: #004085; color: white; position: fixed; height: 100%; padding-top: 20px; }
+        .sidebar h2 { text-align: center; font-size: 20px; margin-bottom: 30px; padding: 0 10px; }
+        .sidebar a { display: block; color: white; padding: 15px 20px; text-decoration: none; cursor: pointer; transition: 0.3s; }
+        .sidebar a:hover, .sidebar a.active { background: #0056b3; border-left: 4px solid #ffc107; }
+        .main-content { margin-left: 250px; padding: 30px; }
+        .card { background: white; padding: 25px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); margin-bottom: 25px; display: none; }
+        .card.active { display: block; }
+        h3 { border-bottom: 2px solid #eee; padding-bottom: 10px; margin-bottom: 20px; color: #004085; }
+        table { width: 100%; border-collapse: collapse; }
+        th, td { padding: 12px; text-align: left; border-bottom: 1px solid #ddd; }
+        th { background-color: #f8f9fa; }
+        .form-group { margin-bottom: 15px; }
+        label { display: block; font-weight: bold; margin-bottom: 5px; }
+        input, select { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px; }
+        button { background: #0056b3; color: white; border: none; padding: 10px 20px; cursor: pointer; border-radius: 4px; font-weight: bold; margin-top: 10px; }
+        button:hover { background: #004085; }
+        .btn-danger { background: #dc3545; }
+        .btn-danger:hover { background: #c82333; }
+        .btn-warning { background: #ffc107; color: #333; }
+        .btn-warning:hover { background: #e0a800; }
+        #statusMessage { margin-top: 15px; font-weight: bold; color: #28a745; }
     </style>
 </head>
 <body>
 
-    <div class="card">
-        <h1>That Smile.</h1>
-        
-        <p>
-            I have seen you many times before.<br>
-            But <span class="highlight">today</span> was different.
-        </p>
-
-        <p>
-           The way you smiled at me... Not the polite smile.<br>
-           <span class="highlight">The real one.</span> 
-        </p>
-
-        <p>
-            You have no idea how beautiful you looked in that moment.
-        </p>
-        
-        <div class="heart">❤</div>
-
-        <div class="date">February 17, 2026</div>
+    <div class="sidebar">
+        <h2>S4 EEE Admin</h2>
+        <a class="nav-link active" onclick="showTab('dashboard')">📊 Live Dashboard</a>
+        <a class="nav-link" onclick="showTab('manager')">👥 Student Manager</a>
+        <a class="nav-link" onclick="showTab('controls')">⚙️ System Controls</a>
     </div>
 
+    <div class="main-content">
+        <div id="dashboard" class="card active">
+            <h3>Live Attendance Feed</h3>
+            <button onclick="fetchAttendance()" style="margin-bottom: 15px; margin-top: 0;">🔄 Refresh Data</button>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Date</th><th>Time</th><th>Roll No</th><th>Name</th><th>Shift</th><th>Finger ID</th>
+                    </tr>
+                </thead>
+                <tbody id="attendance-data">
+                    <tr><td colspan="6">Loading...</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div id="manager" class="card">
+            <h3>Add New Student</h3>
+            <div class="form-group"><label>Roll Number</label><input type="text" id="rollNo" placeholder="e.g. 15"></div>
+            <div class="form-group"><label>Admission Number</label><input type="text" id="admNo" placeholder="e.g. 8452"></div>
+            <div class="form-group"><label>PRN</label><input type="text" id="prnNo" placeholder="e.g. 210xxxx"></div>
+            <div class="form-group"><label>Full Name</label><input type="text" id="studentName" placeholder="e.g. Alfin Philip"></div>
+            <button onclick="addStudent()">➕ Save to Database</button>
+            <p id="addStatus" style="color: green; margin-top: 10px;"></p>
+        </div>
+
+        <div id="controls" class="card">
+            <h3>Remote Hardware Control</h3>
+            
+            <div style="border: 1px solid #ccc; padding: 15px; border-radius: 5px; margin-bottom: 20px;">
+                <h4>☝️ Remote Fingerprint Enrollment</h4>
+                <p style="font-size: 14px; margin-bottom: 10px; color: #666;">Select a Roll Number and trigger the scanner remotely. The hardware will switch to Enroll Mode.</p>
+                <div class="form-group">
+                    <label>Target Roll Number:</label>
+                    <input type="text" id="enrollRollNo" placeholder="Enter Roll No to enroll">
+                </div>
+                <button class="btn-warning" onclick="triggerEnroll()">📡 Start Scanner Mode</button>
+            </div>
+
+            <div style="border: 1px solid #ccc; padding: 15px; border-radius: 5px;">
+                <h4>🕒 Manual Shift Override</h4>
+                <p style="font-size: 14px; margin-bottom: 10px; color: #666;">Force the hardware into a specific shift if college timing changes.</p>
+                <select id="shiftSelect">
+                    <option value="AUTO">Auto (NTP Time)</option>
+                    <option value="Morning">Morning</option>
+                    <option value="Noon">Noon</option>
+                    <option value="Evening">Evening</option>
+                </select>
+                <button class="btn-danger" onclick="overrideShift()">⚠️ Force Shift Update</button>
+            </div>
+            <p id="controlStatus" style="color: blue; margin-top: 15px; font-weight: bold;"></p>
+        </div>
+    </div>
+
+    <script>
+        // ==========================================
+        // UPDATE THESE TWO URLS WITH YOUR ACTUAL LINKS
+        // ==========================================
+        const csvUrl = 'YOUR_PUBLISHED_REPORTS_RAW_CSV_LINK'; 
+        const apiUrl = 'YOUR_NEW_APPS_SCRIPT_WEB_APP_URL'; 
+
+        // Tab Navigation Logic
+        function showTab(tabId) {
+            document.querySelectorAll('.card').forEach(card => card.classList.remove('active'));
+            document.querySelectorAll('.nav-link').forEach(link => link.classList.remove('active'));
+            document.getElementById(tabId).classList.add('active');
+            event.target.classList.add('active');
+        }
+
+        // 1. Fetch Live Attendance (From CSV)
+        async function fetchAttendance() {
+            try {
+                const response = await fetch(csvUrl);
+                const data = await response.text();
+                const rows = data.split('\n').slice(4); // Skip the 4 header rows
+                const tableBody = document.getElementById('attendance-data');
+                tableBody.innerHTML = ''; 
+
+                rows.reverse().forEach(row => {
+                    if(row.trim() !== '') {
+                        const cols = row.split(','); 
+                        if(cols.length >= 6) {
+                            tableBody.innerHTML += `<tr>
+                                <td>${cols[0]}</td><td>${cols[1]}</td>
+                                <td><strong>${cols[2]}</strong></td><td>${cols[3]}</td>
+                                <td>${cols[4]}</td><td>${cols[5]}</td>
+                            </tr>`;
+                        }
+                    }
+                });
+            } catch (error) {
+                document.getElementById('attendance-data').innerHTML = '<tr><td colspan="6">Error loading data.</td></tr>';
+            }
+        }
+
+        // Helper function to send commands to your Google Sheet API
+        async function sendAPICommand(payload, statusElementId) {
+            document.getElementById(statusElementId).innerText = "Sending command...";
+            try {
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'text/plain' }, // text/plain prevents CORS errors
+                    body: JSON.stringify(payload)
+                });
+                const result = await response.text();
+                document.getElementById(statusElementId).innerText = "✅ " + result;
+                setTimeout(() => document.getElementById(statusElementId).innerText = "", 5000);
+            } catch (error) {
+                document.getElementById(statusElementId).innerText = "❌ Error sending command.";
+            }
+        }
+
+        // 2. Add Student to Database
+        function addStudent() {
+            const payload = {
+                action: "add_student",
+                roll_no: document.getElementById('rollNo').value,
+                adm_no: document.getElementById('admNo').value,
+                prn: document.getElementById('prnNo').value,
+                name: document.getElementById('studentName').value
+            };
+            sendAPICommand(payload, 'addStatus');
+        }
+
+        // 3. Trigger Remote Enrollment
+        function triggerEnroll() {
+            const roll = document.getElementById('enrollRollNo').value;
+            if(!roll) return alert("Please enter a Roll Number first!");
+            const payload = {
+                action: "set_control",
+                mode: "ENROLL",
+                target_roll: roll
+            };
+            sendAPICommand(payload, 'controlStatus');
+        }
+
+        // 4. Override Shift Timing
+        function overrideShift() {
+            const shift = document.getElementById('shiftSelect').value;
+            const payload = {
+                action: "set_control",
+                shift_override: shift
+            };
+            sendAPICommand(payload, 'controlStatus');
+        }
+
+        // Load dashboard data on startup
+        fetchAttendance();
+    </script>
 </body>
 </html>
